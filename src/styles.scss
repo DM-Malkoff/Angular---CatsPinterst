@@ -1,0 +1,160 @@
+body {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 21px;
+  letter-spacing: 0.25px;
+  margin: 0;
+
+  .container {
+    width: 100%;
+    max-width: 1340px;
+    margin: 0px auto 0;
+  }
+
+  .top-panel {
+    position: fixed;
+    top: 0;
+    z-index: 9999;
+    width: 100%;
+    display: flex;
+    justify-content: left;
+    margin-bottom: 100px;
+    padding: 0;
+    background-color: #2196F3;
+    box-shadow: 0px 3px 7px 0px #aaa;
+
+    ul {
+      padding-inline-start: 0px;
+      margin: 0;
+      height: 64px;
+
+      li {
+        display: inline-flex;
+        align-items: center;
+        padding: 0 25px;
+        height: 100%;
+
+        a {
+          color: #fff;
+          opacity: 70%;
+          text-decoration: none;
+        }
+
+        &.active {
+          background-color: #1E88E5;
+
+          a {
+            text-decoration: none;
+            opacity: 100%;
+          }
+
+          &:hover {
+            background-color: #1E88E5;
+          }
+        }
+
+        &:hover {
+          background-color: #289afe;
+        }
+      }
+    }
+
+  }
+
+  .gallery {
+    margin-top: 100px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    .cat-block {
+      margin: 0 0 50px 0;
+
+      .cat-image {
+        width: 225px;
+        height: 225px;
+        background-size: cover;
+        background-position: center;
+      }
+
+      &:hover
+      .cat-image {
+        transition: 0.3s;
+        transform: scale(1.2);
+
+      }
+
+      span.like {
+        opacity: 0;
+        display: block;
+        width: 40px;
+        height: 37px;
+        margin-top: -33px;
+        z-index: 999;
+        position: relative;
+        margin-left: 185px;
+        background-image: url("./assets/img/sprite.png");
+        cursor: pointer;
+
+        &:hover {
+          background-image: url("./assets/img/sprite.png");
+          background-position: -40px 0px;
+        }
+
+        &:active {
+          background-image: url("./assets/img/sprite.png");
+          background-position: 0px -37px;
+        }
+      }
+
+      span.liked {
+        background-position: 0px -37px;
+
+        &:active {
+          background-position: 0 0;
+        }
+      }
+
+      &:hover span.like {
+        opacity: 1;
+      }
+
+    }
+  }
+}
+
+/* You can add global styles to this file, and also import other style files */
+@media (max-width: 768px) {
+  body {
+    .gallery{
+      justify-content: space-around!important;
+    }
+  }
+}
+
+@media (max-width: 425px) {
+  .gallery{
+
+  }
+  .top-panel{
+
+    .container{
+      display: flex;
+      justify-content: center;
+    }
+  }
+  .cat-block {
+    margin: 0 0 20px 0 !important;
+
+    .cat-image {
+      width: 250px !important;
+      height: 250px !important;
+    }
+
+    span.like {
+      margin-left: 220px !important;
+    }
+  }
+}

@@ -1,0 +1,13 @@
+<div class="container">
+  <div id="gall" class="gallery" *ngIf="!noPic; else noOne">
+    <div id="cat_{{cat.id}}" class="cat-block" *ngFor="let cat of catObject; let i = index">
+      <div class="cat-image" style="background-image: url({{cat.url}})">
+
+      </div>
+      <span id="like_{{cat.id}}" class="like liked" (click)="deleteLike(cat.id, i)"></span>
+    </div>
+  </div>
+  <ng-template #noOne>
+    <div class="noPicture">Кажется пока ни один котик Вам не понравился :(</div>
+  </ng-template>
+</div>

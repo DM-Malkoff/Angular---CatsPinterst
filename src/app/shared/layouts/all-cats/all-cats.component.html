@@ -1,0 +1,10 @@
+<div class="container">
+  <div class="gallery" *ngIf="catObject">
+    <div class="cat-block" *ngFor="let cat of catObject; let i = index">
+      <div class="cat-image" style="background-image: url({{cat.url}})">
+      </div>
+      <span id="like_{{cat.id}}" class="like" (click)="pushLike(cat.id, i)"></span>
+    </div>
+  </div>
+  <p class="get-more">...загружаем еще котиков...</p>
+</div>
