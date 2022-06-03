@@ -1,28 +1,75 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  QueryList,
+  ViewChildren
+} from '@angular/core';
 import {TheCatApiService} from "../../../services/the-cat-api.service";
 import {Subscription} from "rxjs";
+import {LoaderService} from "../../../services/loader/loader.service";
 
 @Component({
   selector: 'app-all-cats',
   templateUrl: './all-cats.component.html',
   styleUrls: ['./all-cats.component.scss']
 })
-export class AllCatsComponent implements OnInit, OnDestroy {
-  subsGetCat: Subscription
-  catObject: any
+export class AllCatsComponent implements OnInit, OnDestroy, AfterViewInit {
+  @ViewChildren('theLastList', {read: ElementRef})
+  theLastList?: QueryList<ElementRef>
 
-  constructor(private catApiService: TheCatApiService) {
-    this.subsGetCat = this.catApiService.catsApiObservable$.subscribe(response => {
-      this.catObject = response
-    })
+  subsGetCat?: Subscription
+  catObject: any = []
+  catObject2: any = []
+  currentPage = 0
+  observer:any
+
+  constructor(
+    private catApiService: TheCatApiService,
+    public loaderService:LoaderService
+  ) {
+    // this.subsGetCat = this.catApiService.catsApiObservable$.subscribe(response => {
+    //   this.catObject = response
+    //   console.log("111 ",typeof response)
+       // response.forEach((element) => {
+      //   this.catObject.push(element)
+      // })
+    // })
   }
 
   ngOnInit(): void {
     this.getCat()
+    this.intersectionObserver()
+  }
+
+  ngAfterViewInit() {
+    this.theLastList?.changes.subscribe((d) => {
+      //console.log("d???",d)
+      if (d.last) this.observer.observe(d.last.nativeElement)
+    })
   }
 
   getCat() {
-    this.catApiService.getCats()
+    this.subsGetCat = this.catApiService.getCats(this.currentPage).subscribe((response) => {
+      if (this.currentPage == 0 ){
+        this.catObject = response
+      } else {
+        this.catObject = this.catObject.concat(response)
+      }
+
+      // if (this.catObject == 0){
+      //   this.catObject = response
+      // }else{
+      //
+      // }
+      //this.catObject[0] = response
+      console.log("!!! ",this.catObject)
+      console.log("??? ",this.catObject2)
+      // this.ngOnInit()
+      }
+    )
   }
 
   pushLike(id: any, index: number) {
@@ -34,6 +81,22 @@ export class AllCatsComponent implements OnInit, OnDestroy {
     } else {
       classId?.classList.add("liked");
     }
+  }
+
+  intersectionObserver(){
+    let options = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.1
+    }
+
+    this.observer = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting){
+        this.currentPage++
+        console.log('Страница: ', this.currentPage)
+        this.getCat()
+      }
+    }, options)
   }
 
   ngOnDestroy() {

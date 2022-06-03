@@ -10,16 +10,18 @@ export class TheCatApiService {
 
   }
 
-  apiUrl = 'https://api.thecatapi.com/v1/images/search?limit=15'
+  apiUrl = ''
 
   favouriteList: any[] = JSON.parse(localStorage.getItem('cats') || '[]')
 
   public catsApiObservable$ = new Subject()
 
-  getCats() {
-    return this.http.get(this.apiUrl).subscribe((response) => {
-      this.catsApiObservable$.next(response)
-    })
+  getCats(page:number) {
+    return this.http
+      .get(`https://api.thecatapi.com/v1/images/search?page=${page}&limit=25`)
+      // .get(`https://api.thecatapi.com/v1/images/search?page=${page}&limit=15`).subscribe((response) => {
+      // this.catsApiObservable$.next(response)
+    // })
   }
 
   addToFavourite(id: number, catObj: any) {
