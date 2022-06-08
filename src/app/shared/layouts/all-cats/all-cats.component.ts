@@ -24,19 +24,13 @@ export class AllCatsComponent implements OnInit, OnDestroy, AfterViewInit {
   catObject: any = []
   catObject2: any = []
   currentPage = 0
-  observer:any
+  observer: any
 
   constructor(
     private catApiService: TheCatApiService,
-    public loaderService:LoaderService
+    public loaderService: LoaderService
   ) {
-    // this.subsGetCat = this.catApiService.catsApiObservable$.subscribe(response => {
-    //   this.catObject = response
-    //   console.log("111 ",typeof response)
-       // response.forEach((element) => {
-      //   this.catObject.push(element)
-      // })
-    // })
+
   }
 
   ngOnInit(): void {
@@ -46,30 +40,18 @@ export class AllCatsComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngAfterViewInit() {
     this.theLastList?.changes.subscribe((d) => {
-      //console.log("d???",d)
       if (d.last) this.observer.observe(d.last.nativeElement)
     })
   }
 
   getCat() {
     this.subsGetCat = this.catApiService.getCats(this.currentPage).subscribe((response) => {
-      if (this.currentPage == 0 ){
+      if (this.currentPage == 0) {
         this.catObject = response
       } else {
         this.catObject = this.catObject.concat(response)
       }
-
-      // if (this.catObject == 0){
-      //   this.catObject = response
-      // }else{
-      //
-      // }
-      //this.catObject[0] = response
-      console.log("!!! ",this.catObject)
-      console.log("??? ",this.catObject2)
-      // this.ngOnInit()
-      }
-    )
+    })
   }
 
   pushLike(id: any, index: number) {
@@ -83,7 +65,7 @@ export class AllCatsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  intersectionObserver(){
+  intersectionObserver() {
     let options = {
       root: null,
       rootMargin: '0px',
@@ -91,7 +73,7 @@ export class AllCatsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     this.observer = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting){
+      if (entries[0].isIntersecting) {
         this.currentPage++
         console.log('Страница: ', this.currentPage)
         this.getCat()

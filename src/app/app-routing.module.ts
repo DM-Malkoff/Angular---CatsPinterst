@@ -6,8 +6,8 @@ import {AllCatsComponent} from "./shared/layouts/all-cats/all-cats.component";
 
 const routes: Routes = [
 
-  {path: '', redirectTo: 'all-kotiki', pathMatch: 'full'},
-  {path: 'all-kotiki', component: AllCatsComponent},
+  // {path: '', redirectTo: 'all-kotiki', pathMatch: 'full'},
+  {path: '', component: AllCatsComponent, pathMatch:'full'},
   {path: 'favourite-kotiki', component: FavouriteCatsComponent}
 
 ];

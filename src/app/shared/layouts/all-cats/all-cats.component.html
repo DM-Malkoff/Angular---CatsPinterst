@@ -7,9 +7,10 @@
         <span id="like_{{cat.id}}" class="like" (click)="pushLike(cat.id, i)"></span>
       </div>
       <div *ngIf="i+1 != catObject.length">
-        <div class="cat-image" style="background-image: url({{cat.url}})">
+        <div class="cat-image">
+          <img src="{{cat.url}}">
+          <span id="like_{{cat.id}}" class="like" (click)="pushLike(cat.id, i)"></span>
         </div>
-        <span id="like_{{cat.id}}" class="like" (click)="pushLike(cat.id, i)"></span>
       </div>
     </div>
   </div>
